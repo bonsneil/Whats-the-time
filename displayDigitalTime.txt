@@ -1,0 +1,49 @@
+//displayImage();
+
+//document.body.appendChild(newImg);
+
+
+function displayImage() {
+    alert("displayimg");
+    var newImg = document.createElement("img");
+    newImg.setAttribute("src", "clock.jpg");
+    newImg.setAttribute("id", "01");
+    console.log(newImg.id)
+    document.body.appendChild(newImg);
+}
+
+for (var i = 0; i < 4; i++) {
+    var s = "clock0" + i;
+    var newImg = document.createElement("img");
+    newImg.setAttribute("id", s);
+    newImg.setAttribute("src", s + ".png");
+    //newImg.setAttribute("onclick", "printName(this.id)");
+    newImg.addEventListener("click", function () { printTime(this.id) });
+    console.log(newImg.id);
+    document.body.appendChild(newImg);
+}
+
+//dim var clickedClock = document.getElementByID("clock02");
+
+//console.log clickedClock.id;
+
+function testClick() {
+    alert("Clicked")
+}
+
+function printTime(s) {
+    //alert(s);
+    //alert(document.getElementById(s).id);
+    if (s == "clock00") {
+        document.getElementById("answer").innerHTML = "2:00";
+    } else if (s == "clock01") {
+        document.getElementById("answer").innerHTML = "2:15";    
+    } else if (s == "clock02") {
+        document.getElementById("answer").innerHTML = "2:30";
+    } else if (s == "clock03") {
+        document.getElementById("answer").innerHTML = "2:45";
+    }
+
+
+//    alert(x.id)
+}

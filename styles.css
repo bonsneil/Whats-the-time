@@ -1,0 +1,31 @@
+h1 {
+    text-align: center;
+    font-family: Calibri;
+    font-size: 48px;
+}
+
+.clockImage {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 50%;
+}
+
+.resetImage {
+    max-width: 100px;
+    max-height: 100px;
+    display: block;
+    margin: auto;
+    //border-radius: 50%;
+   // -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+   //filter: grayscale(100%);
+}
+
+p {
+    text-align: center;
+    font-family: Calibri;
+    font-size: 48px;
+}
+
+div {
+    text-align: center;
+}
