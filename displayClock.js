@@ -2,38 +2,39 @@
 
 //document.body.appendChild(newImg);
 
+var clocks = [];
+//var clock00 = new Clock;
 
-document.getElementById("question").innerHTML = "Quarter Past";
+function createClockCollection() {
+    for (var i = 0; i < 4; i++) {
+        var s = "clock0" + i;
+        var tmpClock = new Clock(s, 2, i * 15, s + ".png");
+        clocks[i] = tmpClock;
+        var newImg = document.createElement("img");
+        newImg.setAttribute("id", clocks[i].clockId);
+        newImg.setAttribute("src", clocks[i].imgPath);
+        newImg.setAttribute("class", "clockImage");
+        newImg.addEventListener("click", function () { submitAnswer(this.id) });
+        clocks[i].srcImg = newImg;
+        //console.log(newImg.id);
+        //console.log(clocks[i].srcImg.id);
 
-/*
-function displayImage() {
-    alert("displayimg");
-    var newImg = document.createElement("img");
-    newImg.setAttribute("src", "clock.jpg");
-    newImg.setAttribute("id", "01");
-    console.log(newImg.id)
-    document.body.appendChild(newImg);
-}
-*/
-
-for (var i = 0; i < 4; i++) {
-    var s = "clock0" + i;
-    var newImg = document.createElement("img");
-    newImg.setAttribute("id", s);
-    newImg.setAttribute("src", s + ".png");
-    newImg.setAttribute("class", "clockImage");
-    //newImg.setAttribute("onclick", "printName(this.id)");
-    newImg.addEventListener("click", function () { submitAnswer(this.id) });
-    console.log(newImg.id);
-    document.getElementById("clocks").appendChild(newImg);
+    }
 }
 
-//dim var clickedClock = document.getElementByID("clock02");
+function printClockCollection() {
+    for (var i = 0; i < clocks.length; i++) {
+        console.log(clocks[i].clockId);
+        console.log(clocks[i].hour);
+        console.log(clocks[i].minute);
+        console.log(clocks[i].imgPath);
+    }
+}
 
-//console.log clickedClock.id;
-
-function testClick() {
-    alert("Clicked")
+function displayClocks() {
+    for (var i = 0; i < clocks.length; i++) {
+        document.getElementById("clockImages").appendChild(clocks[i].srcImg);
+    }
 }
 
 function submitAnswer(s) {
@@ -55,7 +56,7 @@ function submitAnswer(s) {
         ans.innerText = "Try again";
         document.getElementById(s).setAttribute("style", "filter: grayscale(100%)");
     } else if (s == "clock01") {
-        ans.innerText = "You must be a time lord!!";    
+        ans.innerText = "You must be a time lord!!";
         filterAllImages("grayscale(100%)");
         document.getElementById(s).setAttribute("style", "filter: none");
     } else if (s == "clock02") {
@@ -74,7 +75,7 @@ function submitAnswer(s) {
     }
 
 
-//    alert(x.id)
+    //    alert(x.id)
 }
 
 function displayReset() {
@@ -102,5 +103,28 @@ function filterAllImages(s) {
         elements[i].setAttribute("style", "-webkit-filter: " + s); /* Safari 6.0 - 9.0 */
     }
 }
+
+
+
+//Set the question
+document.getElementById("question").innerHTML = "Quarter Past";
+
+
+createClockCollection();
+printClockCollection();
+displayClocks();
+
+
+/*
+function displayImage() {
+    alert("displayimg");
+    var newImg = document.createElement("img");
+    newImg.setAttribute("src", "clock.jpg");
+    newImg.setAttribute("id", "01");
+    console.log(newImg.id)
+    document.body.appendChild(newImg);
+}
+*/
+
 
 
