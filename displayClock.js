@@ -1,6 +1,7 @@
 ﻿var clocks = [];
+var clocksToDisplay = [];
 var questions = ["O'clock", "Quarter past", "Half past", "Quarter to"]
-console.log(questions);
+var answerClock = new Clock();
 
 function createClockCollection() {
     for (var i = 0; i < 4; i++) {
@@ -16,7 +17,6 @@ function createClockCollection() {
     }
 }
 
-
 function printClockCollection() {
     for (var i = 0; i < clocks.length; i++) {
         console.log(clocks[i].clockId);
@@ -26,10 +26,45 @@ function printClockCollection() {
     }
 }
 
-function displayClocks() {
+function getClock(searchMinute, searchHour) {
     for (var i = 0; i < clocks.length; i++) {
-        document.getElementById("clockImages").appendChild(clocks[i].srcImg);
+        if ((clocks[i].minute == searchMinute) && (clocks[i].hour == searchHour)) {
+            return clocks[i];
+        }
     }
+}
+
+function displayClocks() {
+    for (var i = 0; i < 4; i++) {
+        clocksToDisplay[i] = getClock((i * 15) % 60, 2);
+        //clocksToDisplay[i] = getClock((i * 15) % 60, getRandomIntInclusive(1, 12));
+    }
+
+    //TODO: Randomise display of clocks
+    for (var i = 0; i < clocksToDisplay.length; i++) {
+        document.getElementById("clockImages").appendChild(clocksToDisplay[i].srcImg);
+        if (clocksToDisplay[i].minute == timeAsNumber(document.getElementById("questionSection").innerHTML)) {
+            answerClock = clocksToDisplay[i];
+            console.log("Answer clock set: " + answerClock.minute)
+        }
+    }
+}
+
+function timeAsNumber(timeString) {
+    switch (timeString) {
+        case "O'clock":
+            return 0;
+            break;
+        case "Quarter past":
+            return 15;
+            break;
+        case "Half past":
+            return 30;
+            break;
+        case "Quarter to":
+            return 45;
+            break;
+    }    
 }
 
 function getRandomIntInclusive(min, max) {
@@ -51,7 +86,6 @@ function getClockByID(cId) {
     }
 }
 
-
 function submitAnswer(s) {
     if (document.getElementById("ansID") == null) {
         //console.log("null")
@@ -67,23 +101,16 @@ function submitAnswer(s) {
 
     var answer = document.getElementById("questionSection").innerHTML;
     var clickedClock = getClockByID(s);
-//    var answerClock = getClockByAnswer(s);
 
+    filterAllImages("grayscale(100%)");
+    document.getElementById(answerClock.clockId).setAttribute("style", "filter: none");
 
-    //console.log("Clicked: " + clickedClock.clockId)
-    console.log("Clicked: " + clickedClock.minute)
-    console.log("Clicked: " + clickedClock.minute / 15)
-
-    if (questions[clickedClock.minute / 15] == answer) {
+    if (clickedClock == answerClock) {
         ans.innerHTML = "You must be a time lord!!";
-        filterAllImages("grayscale(100%)");
-        document.getElementById(clickedClock.clockId).setAttribute("style", "filter: none");
     } else {
-        ans.innerHTML = "Try again";
-        filterAllImages("grayscale(100%)");
-  //      document.getElementById(s).setAttribute("style", "filter: none");
+        ans.innerHTML = "Try again ";
     }
-
+    
     if (document.getElementById("resetBtn") == null) {
         console.log("reset null")
         displayReset();
@@ -91,8 +118,7 @@ function submitAnswer(s) {
         console.log("reset not null")
     }
 
-
-    //    alert(x.id)
+    //TODO: Reset button generates new question
 }
 
 function displayReset() {
@@ -119,6 +145,7 @@ function resetGame() {
     resetBtn.parentNode.removeChild(resetBtn);
     document.getElementById("ansID").parentNode.removeChild(document.getElementById("ansID"));
     filterAllImages("none");
+    location.reload();
 }
 
 function filterAllImages(s) {
@@ -130,23 +157,9 @@ function filterAllImages(s) {
 }
 
 
-
+//TODO: Convert to initialise, check for null, delete and create
+setQuestion();
 createClockCollection();
 //printClockCollection();
-setQuestion();
 displayClocks();
-
-
-/*
-function displayImage() {
-    alert("displayimg");
-    var newImg = document.createElement("img");
-    newImg.setAttribute("src", "clock.jpg");
-    newImg.setAttribute("id", "01");
-    console.log(newImg.id)
-    document.body.appendChild(newImg);
-}
-*/
-
-
 
