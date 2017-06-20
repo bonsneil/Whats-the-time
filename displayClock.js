@@ -5,7 +5,7 @@ var answerClock = new Clock();
 
 function createClockCollection() {
     var j = 0;
-    for (var i = 0; i < 8; i++) {
+    for (var i = 0; i < 48; i++) {
         if (((i * 15) % 60) == 0) {
             j++;
         }
@@ -47,9 +47,9 @@ function getClock(searchMinute, searchHour) {
 }
 
 function displayClocks() {
-    for (var i = 0; i < 4; i++) {
-        clocksToDisplay[i] = getClock((i * 15) % 60, getRandomIntInclusive(1, 2));
-        //clocksToDisplay[i] = getClock((i * 15) % 60, getRandomIntInclusive(1, 12));
+    var numberClocksToDisplay = 4;
+    for (var i = 0; i < numberClocksToDisplay; i++) {
+        clocksToDisplay[i] = getClock((i * 15) % 60, getRandomIntInclusive(1, 12));
     }
 
     //Randomise display of clocks
