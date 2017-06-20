@@ -4,9 +4,21 @@ var questions = ["O'clock", "Quarter past", "Half past", "Quarter to"]
 var answerClock = new Clock();
 
 function createClockCollection() {
-    for (var i = 0; i < 4; i++) {
-        var s = "clock0" + i;
-        var tmpClock = new Clock(s, 2, (i * 15) % 60, s + ".png");
+    var j = 0;
+    for (var i = 0; i < 48; i++) {
+        if (((i * 15) % 60) == 0) {
+            j++;
+        }
+        var hr = j;
+        if (hr < 10) {
+            hr = "0" + hr;
+        }
+        var min = (i * 15) % 60;
+        if (min == 0) {
+            min = "00";
+        }
+        var s = "clock" + hr + min;
+        var tmpClock = new Clock(s, hr, min, "_img/" + s + ".png");
         clocks[i] = tmpClock;
         var newImg = document.createElement("img");
         newImg.setAttribute("id", clocks[i].clockId);
@@ -35,12 +47,14 @@ function getClock(searchMinute, searchHour) {
 }
 
 function displayClocks() {
-    for (var i = 0; i < 4; i++) {
-        clocksToDisplay[i] = getClock((i * 15) % 60, 2);
-        //clocksToDisplay[i] = getClock((i * 15) % 60, getRandomIntInclusive(1, 12));
+    var numberClocksToDisplay = 4;
+    for (var i = 0; i < numberClocksToDisplay; i++) {
+        clocksToDisplay[i] = getClock((i * 15) % 60, getRandomIntInclusive(1, 12));
     }
 
-    //TODO: Randomise display of clocks
+    //Randomise display of clocks
+    clocksToDisplay = shuffle(clocksToDisplay);
+
     for (var i = 0; i < clocksToDisplay.length; i++) {
         document.getElementById("clockImages").appendChild(clocksToDisplay[i].srcImg);
         if (clocksToDisplay[i].minute == timeAsNumber(document.getElementById("questionSection").innerHTML)) {
@@ -88,15 +102,11 @@ function getClockByID(cId) {
 
 function submitAnswer(s) {
     if (document.getElementById("ansID") == null) {
-        //console.log("null")
         var ans = document.createElement("div");
         ans.setAttribute("id", "ansID");
         document.getElementById("answerSection").appendChild(ans);
-        //document.body.appendChild(ans);
     } else {
-        //console.log("not null")
         return true;
-        //ans = document.getElementById("ansID");
     }
 
     var answer = document.getElementById("questionSection").innerHTML;
@@ -117,8 +127,6 @@ function submitAnswer(s) {
     } else {
         console.log("reset not null")
     }
-
-    //TODO: Reset button generates new question
 }
 
 function displayReset() {
@@ -132,12 +140,7 @@ function displayReset() {
     //document.body.appendChild(resetBtn);
     console.log("Display image")
     document.getElementById("answerSection").appendChild(resetBtn);
-    //var s = document.createElement("div");
-    //s.setAttribute("display", "inline");
-    //s.setAttribute("class", "answerSection");
-    //s.innerHTML = "Play again?"
-    //console.log("Display s")
-    //document.getElementById("answerSection").appendChild(s);
+
 }
 
 function resetGame() {
@@ -160,6 +163,6 @@ function filterAllImages(s) {
 //TODO: Convert to initialise, check for null, delete and create
 setQuestion();
 createClockCollection();
-//printClockCollection();
+printClockCollection();
 displayClocks();
 
