@@ -136,12 +136,12 @@ ol li {
 }
 
 #sun { 
-  margin-top: -40px;
-  height: 200px;
-  width: 200px;
-  float: left;
+  margin-top: 140px;
   position: relative;
   z-index: 5;
+  height: 100px;
+  width: 100px;
+  float: left;
 }
 
 #main { 
@@ -165,8 +165,8 @@ header {
   width: 847px;
   height: 150px;
   position: relative;
-  background: #FFF;
-//  background: #FFF url(../images/logo.png) no-repeat;
+  //background: #FFF;
+  background: #FFF url(../images/logo.png) no-repeat;
 } 
   
 #logo_text { 
@@ -538,3 +538,4 @@ ul#nav li a:hover {
     font-size: 48px;
 	display: inline;
 }
+

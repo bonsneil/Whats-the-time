@@ -1,73 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
+
 <head>
-	<meta charset="utf-8">
-	<meta name="description" content="A game to learn to tell the time">
-    <title>What's The Time?</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
-  
+  <title>CSS3_five</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
+
 <body>
-	<div id="container">
-		<img id = "sun" src="images/sun.png" alt="sunshine" />
-		<div id="main">
-			<header>
-				<div id="logo">
-					<div id="logo_text">
-						<h1><a href="index.html">Friday <span class="logo_colour">fun!</span></a></h1>
-						<h2>Fun. Educational. Awesome.</h2>
-					</div>
-					<div id="logo_text2">
-						<h3>Telephone</h3>
-						<h4>0100 123 456</h4>
-					</div>
-				</div>
-				
-				<nav>
-					<ul class="sf-menu" id="nav">
-						<li><a href="index.html">Home</a></li>
-						<li><a href="examples.html">Examples</a></li>
-						<li><a href="page.html">A Page</a></li>
-						<li><a href="another_page.html">Another Page</a></li>
-						<li><a href="#">Example Drop Down</a>
-							<ul>
-								<li><a href="#">Drop Down One</a></li>
-								<li><a href="#">Drop Down Two</a>
-									<ul>
-										<li><a href="#">Sub Drop Down One</a></li>
-										<li><a href="#">Sub Drop Down Two</a></li>
-										<li><a href="#">Sub Drop Down Three</a></li>
-										<li><a href="#">Sub Drop Down Four</a></li>
-										<li><a href="#">Sub Drop Down Five</a></li>
-									</ul>
-								</li>
-								<li><a href="#">Drop Down Three</a></li>
-								<li><a href="#">Drop Down Four</a></li>
-								<li><a href="#">Drop Down Five</a></li>
-							</ul>
-						</li>
-						<li><a href="contact.html">Contact Us</a></li>
-					</ul>
-				</nav>
-				
-			</header>
-	 	
-			  <footer>
-			  </footer>
+  <div id="container">
+    <img src="images/sun.png" alt="sunshine" />
+    <div id="main">
+      <header>
+        <div id="logo">
+          <div id="logo_text">
+            <h1><a href="index.html">Friday<span class="logo_colour"> fun!</span></a></h1>
+            <h2>Fun. Educational. Awesome.</h2>
+          </div>
+          <div id="logo_text2">
+          </div>
+        </div>
+        <nav>
+          <ul class="sf-menu" id="nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="examples.html">Clock Games</a></li>
+            <li><a href="page.html">Other Games</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div id="site_content">
+
+		<div id="gameArea">
+			<h1>Click the clock for:</h1>
+			<div id="questionSection"></div>
+			<div id="clockImages"></div>
+			<div id="answerSection"></div>
+	  </div>
+
 		</div>
+		
+      <footer>
+        <p><a href="index.html">Home</a> | <a href="examples.html">Clock Games</a> | <a href="page.html">Other Games</a> | <a href="contact.html">Contact Us</a></p>
+        <p>Copyright &copy; NeilGames | <a href="index.html">design from Neil</a></p>
+      </footer>
+    </div>
+  </div>
+  <div id="grass"></div>
+  
 
-		<h1>Click the clock for:</h1>
-		<div id="questionSection"></div>
-		<div id="clockImages"></div>
-		<div id="answerSection"></div>
-	
-	</div>
-	
-	
-	<div id="grass"></div>
-
-    <script src="library.js"></script>
+		
+	<script src="library.js"></script>
     <script src="Clock.js"></script>
-    <script src="displayClock.js"></script>
-</body>
+	<script src="displayClock.js"></script>
+
+  
+ </body>
 </html>
