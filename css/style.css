@@ -538,6 +538,7 @@ ul#nav li a:hover {
     text-align: center;
     font-family: Calibri;
     font-size: 48px;
+    padding: 10px 20px 30px 20px;
 }
 
 #answerSection{

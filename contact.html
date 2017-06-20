@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>CSS3_five</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <img src="images/sun.png" alt="sunshine" />
+    <div id="main">
+      <header>
+        <div id="logo">
+          <div id="logo_text">
+            <h1><a href="index.html">CSS3<span class="logo_colour">_five</span></a></h1>
+            <h2>Simple. Contemporary. Website Template.</h2>
+          </div>
+          <div id="logo_text2">
+            <h3>Telephone</h3>
+            <h4>0100 123 456</h4>
+          </div>
+        </div>
+        <nav>
+          <ul class="sf-menu" id="nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="examples.html">Examples</a></li>
+            <li><a href="page.html">A Page</a></li>
+            <li><a href="another_page.html">Another Page</a></li>
+            <li><a href="#">Example Drop Down</a>
+              <ul>
+                <li><a href="#">Drop Down One</a></li>
+                <li><a href="#">Drop Down Two</a>
+                  <ul>
+                    <li><a href="#">Sub Drop Down One</a></li>
+                    <li><a href="#">Sub Drop Down Two</a></li>
+                    <li><a href="#">Sub Drop Down Three</a></li>
+                    <li><a href="#">Sub Drop Down Four</a></li>
+                    <li><a href="#">Sub Drop Down Five</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Drop Down Three</a></li>
+                <li><a href="#">Drop Down Four</a></li>
+                <li><a href="#">Drop Down Five</a></li>
+              </ul>
+            </li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div id="site_content">
+        <div id="sidebar_container">
+          <div class="sidebar">
+            <h4>New Website Launched</h4>
+            <h5>January 1st, 2012</h5>
+            <p>2012 sees the redesign of our website. Let us know what you think..... <a href="#">read more</a></p>
+          </div>
+          <div class="sidebar">
+            <h4>20% Discount</h4>
+            <p>For the month of March 2012, we are offering a 20% discount for all new customers.</p>
+          </div>
+          <div class="sidebar">
+            <h4>Contact Us</h4>
+            <p>We'd love to hear from you. Call us, <a href="#">email us</a> or complete our <a href="contact.html">contact form</a>.</p>
+          </div>
+        </div>
+        <div id="content">
+          <h1>Contact Us</h1>
+          <p>Say hello, using this contact form. There is a version of this template with a working PHP contact form, available for download from <a href="http://www.css3templates.co.uk">www.css3templates.co.uk</a>.</p>
+          <form id="contact" action="contact.html" method="post">
+            <div class="form_settings">
+              <p><span>Name</span><input class="contact" type="text" name="your_name" value="" /></p>
+              <p><span>Email Address</span><input class="contact" type="text" name="your_email" value="" /></p>
+              <p><span>Message</span><textarea class="contact textarea" rows="5" cols="50" name="your_message"></textarea></p>
+              <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="send" /></p>
+            </div>
+          </form>
+        </div>
+      </div>
+      <footer>
+        <p><a href="index.html">Home</a> | <a href="examples.html">Examples</a> | <a href="page.html">A Page</a> | <a href="another_page.html">Another Page</a> | <a href="contact.html">Contact Us</a></p>
+        <p>Copyright &copy; CSS3_five | <a href="http://www.css3templates.co.uk">design from css3templates.co.uk</a></p>
+      </footer>
+    </div>
+  </div>
+  <div id="grass"></div>
+  <!-- javascript at the bottom for fast page loading -->
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery.easing-sooper.js"></script>
+  <script type="text/javascript" src="js/jquery.sooperfish.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('ul.sf-menu').sooperfish();
+    });
+  </script>
+</body>
+</html>
