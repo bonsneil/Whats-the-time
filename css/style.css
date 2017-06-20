@@ -222,6 +222,14 @@ header {
   color: #C6006B;
 }
 
+#hathGamesLogo {
+  top: -60px;
+  width: 150px;
+  height: 150px;
+  position: relative;
+  background: #FFF;
+}
+
 nav { 
   width: 846px;
   height: 45px;
@@ -536,5 +544,13 @@ ul#nav li a:hover {
     text-align: center;
     font-family: Calibri;
     font-size: 48px;
-	display: inline;
+    //display: inline;
+
+    //width: 863px;
+    height: 150px;
+    padding: 10px 20px 30px 20px;
+    border-radius: 15px 15px 15px 15px;
+    -moz-border-radius: 15px 15px 15px 15px;
+    -webkit-border: 15px 15px 15px 15px;
+
 }
