@@ -112,28 +112,27 @@ function submitAnswer(s) {
     var answer = document.getElementById("questionSection").innerHTML;
     var clickedClock = getClockByID(s);
 
-    filterAllImages("grayscale(100%)");
+    filterClockImages("grayscale(100%)");
     document.getElementById(answerClock.clockId).setAttribute("style", "filter: none");
+
+
+    if (document.getElementById("resetBtn") == null) {
+        displayReset();
+    } 
 
     if (clickedClock == answerClock) {
         ans.innerHTML = "You must be a time lord!!";
     } else {
         ans.innerHTML = "Try again ";
     }
-    
-    if (document.getElementById("resetBtn") == null) {
-        console.log("reset null")
-        displayReset();
-    } else {
-        console.log("reset not null")
-    }
+
 }
 
 function displayReset() {
     console.log("displayreset");
     var resetBtn = document.createElement("img");
     resetBtn.setAttribute("id", "resetBtn");
-    resetBtn.setAttribute("src", "resetBtn.jpg");
+    resetBtn.setAttribute("src", "images/playAgain.png");
     resetBtn.setAttribute("class", "resetImage");
     resetBtn.addEventListener("click", function () { resetGame() });
     console.log(resetBtn.id);
@@ -147,12 +146,13 @@ function resetGame() {
     console.log("reset clicked");
     resetBtn.parentNode.removeChild(resetBtn);
     document.getElementById("ansID").parentNode.removeChild(document.getElementById("ansID"));
-    filterAllImages("none");
+    filterClockImages("none");
     location.reload();
 }
 
-function filterAllImages(s) {
-    var elements = document.getElementsByTagName("img");
+function filterClockImages(s) {
+    //var elements = document.getElementsByTagName("img");
+    var elements = document.getElementsByClassName("clockImage")
     for (var i = 0; i < elements.length; i++) {
         elements[i].setAttribute("style", "filter: " + s);
         elements[i].setAttribute("style", "-webkit-filter: " + s); /* Safari 6.0 - 9.0 */
