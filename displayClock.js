@@ -24,8 +24,8 @@ function createClockCollection() {
         newImg.setAttribute("id", clocks[i].clockId);
         newImg.setAttribute("src", clocks[i].imgPath);
         newImg.setAttribute("class", "clockImage");
-        newImg.addEventListener("click", function () { submitAnswer(this.id) });
-        clocks[i].srcImg = newImg;
+        //newImg.addEventListener("click", function () { submitAnswer(this.id) });
+        clocks[i].srcImgElement = newImg;
     }
 }
 
@@ -46,6 +46,16 @@ function getClock(searchMinute, searchHour) {
     }
 }
 
+function mouseOver(obj) {
+    //document.getElementById("demo").style.color = "red";
+    alert("Over: " + obj.id)
+}
+
+function mouseOut(obj) {
+    //document.getElementById("demo").style.color = "black";
+    alert("Out: " + obj.id)
+}
+
 function displayClocks() {
     var numberClocksToDisplay = 4;
     for (var i = 0; i < numberClocksToDisplay; i++) {
@@ -56,7 +66,12 @@ function displayClocks() {
     clocksToDisplay = shuffle(clocksToDisplay);
 
     for (var i = 0; i < clocksToDisplay.length; i++) {
-        document.getElementById("clockImages").appendChild(clocksToDisplay[i].srcImg);
+
+        clocksToDisplay[i].srcImgElement.addEventListener("click", function () { submitAnswer(this.id) });
+        //clocksToDisplay[i].srcImgElement.addEventListener("mouseover", function () { mouseOver(this) });
+        //clocksToDisplay[i].srcImgElement.addEventListener("mouseout", function () { mouseOut(this) });
+
+        document.getElementById("clockImages").appendChild(clocksToDisplay[i].srcImgElement);
         if (clocksToDisplay[i].minute == timeAsNumber(document.getElementById("questionSection").innerHTML)) {
             answerClock = clocksToDisplay[i];
             console.log("Answer clock set: " + answerClock.minute)

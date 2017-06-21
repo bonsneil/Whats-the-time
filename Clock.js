@@ -3,5 +3,5 @@ function Clock(cId, h, m, imgP) {
     this.hour = h;
     this.minute = m;
     this.imgPath = imgP;
-    this.srcImg = {};
+    this.srcImgElement = {};
 }
