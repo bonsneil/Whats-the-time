@@ -1,6 +1,7 @@
 ﻿var clocks = [];
 var clocksToDisplay = [];
 var questions = ["O'clock", "Quarter past", "Half past", "Quarter to"]
+var currentQuestion = ""
 var answerClock = new Clock();
 
 function createClockCollection() {
@@ -9,23 +10,20 @@ function createClockCollection() {
         if (((i * 15) % 60) == 0) {
             j++;
         }
-        var hr = j;
-        if (hr < 10) {
-            hr = "0" + hr;
-        }
-        var min = (i * 15) % 60;
-        if (min == 0) {
-            min = "00";
-        }
+
+        var hr = numberAsString(j);
+        var min = numberAsString((i * 15) % 60);
+
         var s = "clock" + hr + min;
         var tmpClock = new Clock(s, hr, min, "_img/" + s + ".png");
         clocks[i] = tmpClock;
+/*      //Moved assign images to clock to display so only creates images needed for display
         var newImg = document.createElement("img");
         newImg.setAttribute("id", clocks[i].clockId);
         newImg.setAttribute("src", clocks[i].imgPath);
         newImg.setAttribute("class", "clockImage");
-        //newImg.addEventListener("click", function () { submitAnswer(this.id) });
         clocks[i].srcImgElement = newImg;
+*/
     }
 }
 
@@ -48,18 +46,26 @@ function getClock(searchMinute, searchHour) {
 
 function mouseOver(obj) {
     //document.getElementById("demo").style.color = "red";
-    alert("Over: " + obj.id)
+    //alert("Over: " + obj.id)
+    //obj.height = obj.height * 1.5;
 }
 
 function mouseOut(obj) {
     //document.getElementById("demo").style.color = "black";
-    alert("Out: " + obj.id)
+    //alert("Out: " + obj.id)
+    //obj.height = obj.height / 1.5;
 }
 
 function displayClocks() {
     var numberClocksToDisplay = 4;
     for (var i = 0; i < numberClocksToDisplay; i++) {
         clocksToDisplay[i] = getClock((i * 15) % 60, getRandomIntInclusive(1, 12));
+        //Attach Images To Clock
+        var newImg = document.createElement("img");
+        newImg.setAttribute("id", clocksToDisplay[i].clockId);
+        newImg.setAttribute("src", clocksToDisplay[i].imgPath);
+        newImg.setAttribute("class", "clockImage");
+        clocksToDisplay[i].srcImgElement = newImg;
     }
 
     //Randomise display of clocks
@@ -68,43 +74,21 @@ function displayClocks() {
     for (var i = 0; i < clocksToDisplay.length; i++) {
 
         clocksToDisplay[i].srcImgElement.addEventListener("click", function () { submitAnswer(this.id) });
-        //clocksToDisplay[i].srcImgElement.addEventListener("mouseover", function () { mouseOver(this) });
-        //clocksToDisplay[i].srcImgElement.addEventListener("mouseout", function () { mouseOut(this) });
+        clocksToDisplay[i].srcImgElement.addEventListener("mouseover", function () { mouseOver(this) });
+        clocksToDisplay[i].srcImgElement.addEventListener("mouseout", function () { mouseOut(this) });
 
         document.getElementById("clockImages").appendChild(clocksToDisplay[i].srcImgElement);
-        if (clocksToDisplay[i].minute == timeAsNumber(document.getElementById("questionSection").innerHTML)) {
+        if (clocksToDisplay[i].minute == timeAsNumber(currentQuestion)) {
             answerClock = clocksToDisplay[i];
-            console.log("Answer clock set: " + answerClock.minute)
+            //console.log("Answer clock set: " + answerClock.minute)
         }
     }
 }
 
-function timeAsNumber(timeString) {
-    switch (timeString) {
-        case "O'clock":
-            return 0;
-            break;
-        case "Quarter past":
-            return 15;
-            break;
-        case "Half past":
-            return 30;
-            break;
-        case "Quarter to":
-            return 45;
-            break;
-    }    
-}
-
-function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function setQuestion () {
     var i = getRandomIntInclusive(0, 3)
-    document.getElementById("questionSection").innerHTML = questions[i];
+    currentQuestion = questions[i];
+    document.getElementById("questionSection").innerHTML = currentQuestion;
 }
 
 function getClockByID(cId) {
@@ -124,7 +108,6 @@ function submitAnswer(s) {
         return true;
     }
 
-    var answer = document.getElementById("questionSection").innerHTML;
     var clickedClock = getClockByID(s);
 
     filterClockImages("grayscale(100%)");
@@ -136,9 +119,9 @@ function submitAnswer(s) {
     } 
 
     if (clickedClock == answerClock) {
-        ans.innerHTML = "You must be a time lord!!";
+        ans.innerHTML = correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)];
     } else {
-        ans.innerHTML = "Try again ";
+        ans.innerHTML = incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)];
     }
 
 }
