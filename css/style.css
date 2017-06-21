@@ -512,6 +512,17 @@ ul#nav li a:hover {
   text-shadow: none;
 }
 
+.mainList{
+  margin: 0 0 0 0;
+  padding: 10px 10px 5px 0;
+}
+
+.gameLink {
+  font: normal 150% arial, sans-serif;
+  text-shadow: 1px 1px #FFF;
+  color: #E5017D;
+}
+
 #gameArea {
     cursor: default;
 }
