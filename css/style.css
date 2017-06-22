@@ -146,7 +146,9 @@ ol li {
 
 #main { 
   margin-top: -140px;
-  width: 863px;
+  /*width: 863px;*/
+  /*width for internal area will be 960px;*/
+  width: 1002px;
   padding: 10px 20px 30px 20px;
   border-radius: 15px 15px 15px 15px;
   -moz-border-radius: 15px 15px 15px 15px;
@@ -157,22 +159,24 @@ ol li {
 }
 
 header { 
-  width: 847px;
+  /*width: 847px;*/
+  width: 962px;
   background: #FFF;
   color: #FFF;}
 
 #logo { 
-  width: 847px;
-  height: 150px;
+  /*width: 847px;*/
+  width: 962px;
+  height: 135px;
   position: relative;
   background: #FFF;
-//  background: #FFF url(../images/logo.png) no-repeat;
+  /*background: #FFF url(../images/logo.png) no-repeat;*/
 } 
   
 #logo_text { 
   float: left;
   width: 550px;
-  padding: 5px 0 0 0;
+  padding: 15px 0 0 0;
 }
 
 #logo_text h1 { 
@@ -207,7 +211,7 @@ header {
   float: right;
   width: 170px;
   text-align: center;
-  padding: 55px 37px 0 0px;
+  padding: 0px 0px 0 0px;
 }
 
 #logo_text2 h3, #logo_text2 h4 { 
@@ -223,15 +227,15 @@ header {
 }
 
 #hathGamesLogo {
-  top: -60px;
-  width: 150px;
-  height: 150px;
+  width: 125px;
+  height: 125px;
   position: relative;
   background: #FFF;
 }
 
 nav { 
-  width: 846px;
+  /*width: 846px;*/
+  width: 962px;
   height: 45px;
   border-radius: 10px 10px 0 0;
   -moz-border-radius: 10px 10px 0 0;
@@ -240,7 +244,9 @@ nav {
 } 
 
 #site_content { 
-  width: 847px;
+  /*width: 847px;*/
+  width: 962px;
+  min-height: 642px;
   background: #FFF;
   color: #555;
   overflow: hidden;
@@ -249,12 +255,13 @@ nav {
 
 #sidebar_container {  
   float: right;
-  width: 202px;
+  width: 242px;
 }
 
 .sidebar { 
   margin: 10px 0;
-  width: 178px;
+  /*width: 178px;*/
+  width: 220px;
   padding: 10px;
   border: 1px solid #C9E5E9;
   border-radius: 15px 15px 15px 15px;
@@ -263,14 +270,10 @@ nav {
   background: #F5FEFF;
 }
 
-#content { 
-  text-align: left;
-  width: 620px;
-  padding: 10px 0 25px 0px;
-}
 
 footer { 
-  width: 806px;
+  /*width is 40 less than other elements*/
+  width: 922px;
   height: 75px;
   padding: 25px 20px 25px 20px;
   text-align: center; 
@@ -392,11 +395,6 @@ table tr td {
   border-top: 1px solid #FFF;
 }
 
-/**
-Stylesheet for SooperFish by www.SooperThemes.com
-Author: Jurriaan Roelofs
-**/
-
 /* Configuration of menu width */
 html body ul.sf-menu ul,html body ul.sf-menu ul li { 
   width: 200px;
@@ -469,24 +467,7 @@ ul.sf-menu ul ul ul li:hover ul ul,ul.sf-menu ul ul ul li:focus ul ul,ul.sf-menu
   left: -999999px;
 }
 
-/* autoArrows CSS */
-span.sf-arrow { 
-  width: 7px;
-  height: 7px;
-  position: absolute;
-  top: 20px;
-  right: 5px;
-  display: block;
-  background: url(../images/arrows-white.png) no-repeat 0 0;
-  overflow: hidden; /* making sure IE6 doesn't overflow and expand the box */
-  font-size: 1px;
-}
 
-ul ul span.sf-arrow { 
-  right: 10;
-  top: 20px;
-  background-position: 0 100%;
-}
 
 /* Theming the menu */
 ul#nav { 
@@ -525,6 +506,12 @@ ul#nav li a:hover {
 
 #gameArea {
     cursor: default;
+	/*Landscape*/
+	height: 642px;
+	width: 962px;
+	/*Portrait*/
+	/*height: 960px;*/
+	/*width: 640px;*/
 }
 
 .clockImage {
@@ -543,9 +530,9 @@ ul#nav li a:hover {
     max-height: 100px;
     display: block;
     margin: auto;
-    //border-radius: 50%;
-   // -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-   //filter: grayscale(100%);
+    /*border-radius: 50%;*/
+    /* -webkit-filter: grayscale(100%);*/ /* Safari 6.0 - 9.0 */
+    /*filter: grayscale(100%); */
     cursor: pointer;
 }
 
@@ -561,13 +548,19 @@ ul#nav li a:hover {
     text-align: center;
     font-family: Calibri;
     font-size: 48px;
-    //display: inline;
+    /*display: inline;*/
 
-    //width: 863px;
+    /*width: 863px;*/
     height: 150px;
     padding: 10px 20px 30px 20px;
     border-radius: 15px 15px 15px 15px;
     -moz-border-radius: 15px 15px 15px 15px;
     -webkit-border: 15px 15px 15px 15px;
 
+}
+
+.testBorder{	
+    border-style: dotted;
+    border-width: 1px;
+    border-color: red;
 }
