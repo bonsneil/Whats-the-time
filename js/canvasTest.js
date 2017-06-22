@@ -2,13 +2,6 @@ var fourColumns = [];
 var clocks = [];
 var clocksToDisplay = [];
 
-function digitalClock(cId, h, m) {
-    this.clockId = cId;
-    this.hour = h;
-    this.minute = m;
-    this.width = 150;
-    this.height = 80;
-}
 
 
 function createClockCollection() {
@@ -22,7 +15,7 @@ function createClockCollection() {
         var min = numberAsString((i * 15) % 60);
 
         var s = "clock" + hr + min;
-        var tmpClock = new digitalClock(s, hr, min);
+        var tmpClock = new DigitalClock(s, hr, min);
         clocks[i] = tmpClock;
     }
 }

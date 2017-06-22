@@ -7,6 +7,12 @@ Icons on home page
 Scores
 High scores - persistent
 //home page
+
+mouse position in canvase:
+https://developer.mozilla.org/en/docs/Web/API/Element/getBoundingClientRect
+
+traverse DOM and get elements
+https://www.w3schools.com/jsref/prop_element_offsetleft.asp
 convert to canvas tag: isolate game code - standalone in set container
 https://www.tutorialspoint.com/html5/html5_canvas.htm
 

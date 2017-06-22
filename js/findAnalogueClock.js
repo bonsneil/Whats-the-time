@@ -17,13 +17,6 @@ function createClockCollection() {
         var s = "clock" + hr + min;
         var tmpClock = new Clock(s, hr, min, "../_img/" + s + ".png");
         clocks[i] = tmpClock;
-/*      //Moved assign images to clock to display so only creates images needed for display
-        var newImg = document.createElement("img");
-        newImg.setAttribute("id", clocks[i].clockId);
-        newImg.setAttribute("src", clocks[i].imgPath);
-        newImg.setAttribute("class", "clockImage");
-        clocks[i].srcImgElement = newImg;
-*/
     }
 }
 
