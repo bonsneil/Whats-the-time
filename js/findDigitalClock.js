@@ -20,6 +20,15 @@ var clocks = [];
 var clocksToDisplay = [];
 
 var answerClock = new Clock();
+var answerClockImageLoaded = false;
+var answerClockImage = new Image();
+var answerSubmitted = false;
+
+var resetButton = { x: canvas.width / 2 - 75, y: canvas.height / 2 + 100, width: 150, height: 100 }
+var resetButtonImageLoaded = false;
+var resetButtonImage = new Image();
+
+var map = { x: 30, y: 50, width: 200, height: 200, color: "maroon" };
 
 
 function createClockCollection() {
@@ -48,26 +57,16 @@ function printClockCollection() {
 
 function drawDigitalClocks() {
     for (var i = 0; i < 4; i++) {
-        drawClockFrame(fourColumns[i], canvas.height / 2, clocksToDisplay[i]);
+        drawClockFrame(clocksToDisplay[i]);
     }
     // Run loop again to make appear on top
     for (var i = 0; i < 4; i++) {
-        drawClockText(fourColumns[i], canvas.height / 2, clocksToDisplay[i]);
+        drawClockText(clocksToDisplay[i]);
     }
 }
 
-function drawClockFrame(x, y, digitalClockObj) {
-//    console.log("x: " + x + ", y: " + y);
-//    console.log(digitalClockObj.hour + " :" + digitalClockObj.minute)
-    drawRectangleWithBorder(x - digitalClockObj.widthDigital / 2, y - digitalClockObj.heightDigital / 2, digitalClockObj.widthDigital, digitalClockObj.heightDigital);
-}
-
-function drawClockText(x, y, digitalClockObj) {
-    drawText(x, y + 15, digitalClockObj.hour + ":" + digitalClockObj.minute);
-}
-
-function drawRectangleWithBorder(x, y, w, h) {
-    ctx.rect(x, y, w, h);
+function drawClockFrame(digitalClockObj) {
+    ctx.rect(digitalClockObj.x, digitalClockObj.y, digitalClockObj.width, digitalClockObj.height);
     ctx.fillStyle = "#8ED6FF"; //Light blue
     ctx.fill();
     ctx.lineWidth = 2;
@@ -75,11 +74,14 @@ function drawRectangleWithBorder(x, y, w, h) {
     ctx.stroke();
 }
 
-function drawText(x, y, msg) {
+function drawClockText(digitalClockObj) {
+    //centre of box
+    xCentre = digitalClockObj.x + digitalClockObj.width * 0.5;
+    yCentre = digitalClockObj.y + digitalClockObj.height * 0.5 + 15; //Arial all caps at 40 px is height 30 px, halved is 15
     ctx.fillStyle = "#FF8C00"; //Orange
     ctx.font = "40px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(msg, x, y);
+    ctx.fillText(digitalClockObj.hour + ":" + digitalClockObj.minute, xCentre, yCentre);
 }
 
 function fourColumnCanvas() {
@@ -113,92 +115,153 @@ function createGameClocks() {
 
     //Randomise game clocks
     clocksToDisplay = shuffle(clocksToDisplay);
+
+    //assign x and y positions to game clocks
+    for (var i = 0; i < numberClocksToDisplay; i++) {
+        clocksToDisplay[i].x = fourColumns[i] - clocksToDisplay[i].width * .5;
+        clocksToDisplay[i].y = canvas.height * .5;
+    }
 }
 
 function setDigitalClockQuestion() {
-
     var i = getRandomIntInclusive(0, clocksToDisplay.length - 1)
     answerClock = clocksToDisplay[i];
-    //document.getElementById("questionSection").innerHTML = answerClock.hour + ":" + answerClock.minute;
 }
 
 
 function drawAnalogueClock() {
+    answerClockImage.src = answerClock.imgPath;
 
-
-
-    var img = new Image();
-    //img.src = "../_img/clock1100.png";
-    img.src = answerClock.imgPath;
-
-    img.onload = function () {
-        ctx.drawImage(img, canvas.width / 2 - 100, 50, 200, 200);
+    // ensures image has loaded before attempting to draw
+    answerClockImage.onload = function () {
+        answerClockImageLoaded = true;
     }
 
-//    ctx.addHitRegion({ id: "analogueClock" });
-
-
-    /*
-    var newImg = document.createElement("img");
-    newImg.setAttribute("id", answerClock.clockId + "x");
-    console.log("Path: " + answerClock.imgPath);
-    newImg.setAttribute("src", answerClock.imgPath);
-    newImg.setAttribute("class", "clockImage");
-    document.body.appendChild(newImg)
-
-    var img = document.getElementById(answerClock.clockId + "x")
-    ctx.drawImage(img, 50, 50);
-
-    */
+    if (answerClockImageLoaded) {
+        ctx.drawImage(answerClockImage, canvas.width / 2 - 100, 50, 200, 200);
+        return;
+    }
 
 }
 
 
 
-function onClick(e) {
-   /*
-    var offsetX = 0, offsetY = 0
-
-    offsetX = canvas.offsetLeft
-    offsetY = canvas.offsetTop
-    console.log("offsetLeft: " + canvas.offsetLeft)
-    console.log("offsetTop: " + canvas.offsetTop)
-    x = e.pageX;
-    y = e.pageY;
-    console.log(x + ", " + y)
-    x = e.pageX - offsetX;
-    y = e.pageY - offsetY;
-    console.log(x + ", " + y)
-    */
-
-    //TODO: Recursive up tree adding padding and margin and height if || or padding and margin if inside
-
-    var offsetX = 0, offsetY = 0
-    rectObject = canvas.getBoundingClientRect();
+// place holders for mouse x,y position
+var mouseX = 0;
+var mouseY = 0;
 
 
-    //offsetX = (document.body.clientWidth - canvas.width) / 2
-    offsetX = rectObject.top;
-    x = e.pageX - offsetX;
-    
-    //header == 180, main padding == 10, main margin == -140
-    //offsetY = 180 + 10 - 140 + 176
-    offsetY = rectObject.left;
-    y = e.pageY - offsetY;
-    console.log(x + ", " + y)
-
-
-    console.log(rectObject)
+// update mouse position
+canvas.onmousemove = function (e) {
+    mouseX = e.offsetX;
+    mouseY = e.offsetY;
 }
 
-canvas.addEventListener("click", onClick, false);
+
+// detect mouse clicks
+canvas.onclick = function (e) {
+    // Check if a clock is clicked
+    if (resetButtonImageLoaded) {
+        console.log(resetButton)
+        var collision = contains(resetButton, mouseX, mouseY);
+        if (collision) {
+            resetGame();
+            return;
+        }
+    }
+
+    for (var i = 0; i < clocksToDisplay.length; i++) {
+        var collision = contains(clocksToDisplay[i], mouseX, mouseY);
+        if (collision) {
+            submitAnswer(clocksToDisplay[i]);
+            return;
+        }
+    }
+}
+
+function resetGame() {
+    resetButtonImageLoaded = false;
+    console.log("reset clicked");
+    location.reload();
+}
+
+
+function drawResetButton() {
+    resetButtonImage.src = "../images/playAgain.png";
+
+    // ensures image has loaded before attempting to draw
+    resetButtonImage.onload = function () {
+        resetButtonImageLoaded = true;
+    }
+
+    if (resetButtonImageLoaded) {
+        ctx.drawImage(resetButtonImage, resetButton.x, resetButton.y, resetButton.width, resetButton.height);
+        return;
+    }
+
+}
+
+
+function submitAnswer(clickedClock){
+    if (answerSubmitted) {
+        return;
+    }
+    answerSubmitted = true;
+    drawResetButton();
+
+    if (clickedClock == answerClock) {
+        alert(correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)]);
+    } else {
+        alert(incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)]);
+    }
+}
+
+
+// test for collision between a target object and a point
+function contains(target, x, y) {
+    return (x >= target.x &&
+        x <= target.x + target.width &&
+        y >= target.y &&
+        y <= target.y + target.height
+    );
+}
 
 console.log("findDigitalClock()")
 createClockCollection();
 printClockCollection();
 fourColumnCanvas();
 createGameClocks();
+printClockCollection();
 setDigitalClockQuestion();
-drawDigitalClocks();
-drawAnalogueClock();
 
+// loop
+setInterval(onTimerTick, 33);
+
+// render loop
+function onTimerTick() {
+    // clear the canvas
+    //canvas.width = canvas.width;
+    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+    //ctx.restore();
+
+    drawAnalogueClock();
+    drawDigitalClocks();
+    if (answerSubmitted) {
+        drawResetButton();
+    }
+
+    // see if a collision happened
+    //var collision = contains(map, mouseX, mouseY);
+    //var color = collision ? map.color : "black";
+    //var collision = contains(player, mouseX, mouseY);
+    //var color = collision ? player.color : color;
+
+    // render text
+    ctx.fillStyle = "black";
+    ctx.font = "18px sans-serif";
+    ctx.fillText("(" + mouseX + "," + mouseY + ")", 60, 20);
+
+    // render square    
+    //context.fillStyle = color;
+    //context.fillRect(box.x, box.y, box.width, box.height);
+}

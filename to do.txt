@@ -1,6 +1,7 @@
 //Dictionary for answers
 //Random winning text
 //home page size set
+//refresh all except image
 add display time function to clock object
 Floating / animated notification / hover?
 Icons on home page
@@ -20,6 +21,7 @@ Contact form
 //Mouseover icon/effect
 Rewards
 
+easter egg player behind screen
 
 960 x 640
 

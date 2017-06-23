@@ -1,30 +1,7 @@
-var fourColumns = [];
-var clocks = [];
-var clocksToDisplay = [];
-
-
-
-function createClockCollection() {
-    var j = 0;
-    for (var i = 0; i < 48; i++) {
-        if (((i * 15) % 60) == 0) {
-            j++;
-        }
-
-        var hr = numberAsString(j);
-        var min = numberAsString((i * 15) % 60);
-
-        var s = "clock" + hr + min;
-        var tmpClock = new DigitalClock(s, hr, min);
-        clocks[i] = tmpClock;
-    }
-}
-
-
-
 // create a canvas to work with
 var canvas = document.createElement('canvas');
 document.getElementById("gameArea").appendChild(canvas);
+//document.body.appendChild(canvas);
 
 // style canvas
 canvas.width = 960;
@@ -37,31 +14,12 @@ canvas.setAttribute("style", "border: 1px solid black;");
 var ctx = canvas.getContext('2d');
 
 
-createClockCollection();
-fourColumnCanvas();
-drawClocks();
-
-
-
-function drawClocks() {
-    for (var i = 0; i < 4; i++) {
-        drawClock(fourColumns[i], canvas.height / 2, clocks[i]);
-    }
-
-}
-
-function drawClock(x, y, digitalClockObj) {
-    console.log(digitalClockObj.hour + " :" + digitalClockObj.minute)
-    drawRectangleWithBorder(x - digitalClockObj.width / 2, y - digitalClockObj.height / 2, digitalClockObj.width, digitalClockObj.height);
-    drawText(x, y, digitalClockObj.hour + " :" + digitalClockObj.minute);
-}
-
 
 function drawText(x, y, msg) {
     console.log(msg);
     ctx.fillStyle = "#FF8C00"; //Orange
     ctx.font = "30px Arial";
-    ctx.textAlign = "center"; 
+   // ctx.textAlign = "center"; 
     ctx.fillText(msg, x, y);
 }
 
@@ -74,37 +32,98 @@ function fourColumnCanvas() {
 }
 
 function drawRectangleWithBorder(x, y, w, h){
-    ctx.rect(x, y, w, h);
     ctx.fillStyle = "#8ED6FF"; //Light blue
-    ctx.fill();
+    ctx.fillRect(x, y, w, h);
     ctx.lineWidth = 2;
     ctx.strokeStyle = "black";
-    ctx.stroke();
+    ctx.strokeRect(x, y, w, h);
 }
 
 
 
+var newDiv = document.createElement("div");
+//drawText(10, 10, "Hello world")
 
-function writeMessage(canvas, message) {
-    var context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.font = '18pt Calibri';
-    context.fillStyle = 'black';
-    context.fillText(message, 10, 25);
+
+// setup some basic squares to use for our example
+var map = { x: 30, y: 50, width: 200, height: 200, color: "maroon" };
+var player = { x: 0, y: 0, width: 25, height: 25, color: "silver" };
+
+// center player on map
+player.x = map.x + (map.width - player.width) * .5;
+player.y = map.y + (map.height - player.height) * .5;
+
+// draw map
+function drawMap() {
+    ctx.fillStyle = map.color;
+    ctx.fillRect(map.x, map.y, map.width, map.height);
 }
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-    };
+
+// draw player
+function drawPlayer() {
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+}
+
+// place holders for mouse x,y position
+var mouseX = 0;
+var mouseY = 0;
+
+
+// update mouse position
+canvas.onmousemove = function (e) {
+    mouseX = e.offsetX;
+    mouseY = e.offsetY;
 }
 
 
-canvas.addEventListener('mousemove', function (evt) {
-    var mousePos = getMousePos(canvas, evt);
-    var message = 'Mouse position: ' + Math.floor(mousePos.x) + ', ' + Math.floor(mousePos.y);
-    var mouseElement = document.getElementById("mouseXY");
-    mouseElement.innerText = message;
-    //writeMessage(canvas, message);
-}, false);
+// detect mouse clicks
+canvas.onclick = function (e) {
+    var collision = contains(player, mouseX, mouseY);
+    if (collision) {
+        alert("Player clicked");
+        return;
+    }
+
+    var collision = contains(map, mouseX, mouseY);
+    if (collision) {
+        alert("Map clicked");
+    }
+
+}
+
+// test for collision between a target object and a point
+function contains(target, x, y) {
+    return (x >= target.x &&
+        x <= target.x + target.width &&
+        y >= target.y &&
+        y <= target.y + target.height
+    );
+}
+
+
+// loop
+setInterval(onTimerTick, 33);
+
+// render loop
+function onTimerTick() {
+    // clear the canvas
+    canvas.width = canvas.width;
+    drawMap();
+    drawPlayer();
+
+    // see if a collision happened
+    var collision = contains(map, mouseX, mouseY);
+    var color = collision ? map.color : "black";
+    var collision = contains(player, mouseX, mouseY);
+    var color = collision ? player.color : color;
+
+    // render text
+    ctx.fillStyle = color;
+    ctx.font = "18px sans-serif";
+    ctx.fillText(" Mouse (" + mouseX + "," + mouseY + ")", 10, 20);
+
+    // render square    
+    //context.fillStyle = color;
+    //context.fillRect(box.x, box.y, box.width, box.height);
+}

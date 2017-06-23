@@ -4,6 +4,8 @@ function Clock(cId, h, m, imgP) {
     this.minute = m;
     this.imgPath = imgP;
     this.srcImgElement = {};
-    this.widthDigital = 150;
-    this.heightDigital = 80;
+    this.x = 0; //top left for canvas
+    this.y = 0; //top left for canvas
+    this.width = 150; //defaulte digital width
+    this.height = 80; //default digial height
 }
