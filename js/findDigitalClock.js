@@ -5,7 +5,7 @@ document.getElementById("gameArea").appendChild(canvas);
 // style canvas
 canvas.width = 960;
 canvas.height = 640;
-canvas.setAttribute("style", "border: 1px solid black;");
+//canvas.setAttribute("style", "border: 1px solid black;");
 
 // get 2D context
 var ctx = canvas.getContext('2d');
@@ -23,8 +23,9 @@ var answerClock = new Clock();
 var answerClockImageLoaded = false;
 var answerClockImage = new Image();
 var answerSubmitted = false;
+var answerMsg = "";
 
-var resetButton = { x: canvas.width / 2 - 75, y: canvas.height / 2 + 100, width: 150, height: 100 }
+var resetButton = { x: canvas.width / 2 - 75, y: canvas.height / 2 + 175, width: 150, height: 100 }
 var resetButtonImageLoaded = false;
 var resetButtonImage = new Image();
 
@@ -128,6 +129,13 @@ function setDigitalClockQuestion() {
     answerClock = clocksToDisplay[i];
 }
 
+function drawQuestion() {
+    msg = "What time is this clock showing?"
+    ctx.fillStyle = "#E5017D"; //Pink
+    ctx.font = "30px Arial";
+    ctx.textAlign = "left"; 
+    ctx.fillText(msg, 10, 30);
+}
 
 function drawAnalogueClock() {
     answerClockImage.src = answerClock.imgPath;
@@ -138,12 +146,34 @@ function drawAnalogueClock() {
     }
 
     if (answerClockImageLoaded) {
-        ctx.drawImage(answerClockImage, canvas.width / 2 - 100, 50, 200, 200);
+        ctx.drawImage(answerClockImage, canvas.width / 2 - 100, 75, 200, 200);
         return;
     }
 
 }
 
+
+
+function updateMouseIcon() {
+
+    if (resetButtonImageLoaded) {
+        var collision = contains(resetButton, mouseX, mouseY);
+        if (collision) {
+            canvas.style.cursor = 'pointer';
+            return;
+        }
+    }
+
+    for (var i = 0; i < clocksToDisplay.length; i++) {
+        var collision = contains(clocksToDisplay[i], mouseX, mouseY);
+        if (collision) {
+            canvas.style.cursor = 'pointer';
+            return;
+        }
+    }
+
+    canvas.style.cursor = 'default';
+}
 
 
 // place holders for mouse x,y position
@@ -155,6 +185,7 @@ var mouseY = 0;
 canvas.onmousemove = function (e) {
     mouseX = e.offsetX;
     mouseY = e.offsetY;
+    updateMouseIcon()
 }
 
 
@@ -201,6 +232,12 @@ function drawResetButton() {
 
 }
 
+function drawAnswer(msg) {
+    ctx.fillStyle = "#E5017D"; //Pink
+    ctx.font = "30px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(msg, canvas.width / 2, 460);
+}
 
 function submitAnswer(clickedClock){
     if (answerSubmitted) {
@@ -210,9 +247,11 @@ function submitAnswer(clickedClock){
     drawResetButton();
 
     if (clickedClock == answerClock) {
-        alert(correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)]);
+        answerMsg = correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)]; 
+        drawAnswer(answerMsg);
     } else {
-        alert(incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)]);
+        answerMsg = incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)];
+        drawAnswer(answerMsg);
     }
 }
 
@@ -244,9 +283,11 @@ function onTimerTick() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); 
     //ctx.restore();
 
+    drawQuestion();
     drawAnalogueClock();
     drawDigitalClocks();
     if (answerSubmitted) {
+        drawAnswer(answerMsg);
         drawResetButton();
     }
 
@@ -256,10 +297,12 @@ function onTimerTick() {
     //var collision = contains(player, mouseX, mouseY);
     //var color = collision ? player.color : color;
 
-    // render text
+    // Draw mouse co-ords
+    /*
     ctx.fillStyle = "black";
     ctx.font = "18px sans-serif";
-    ctx.fillText("(" + mouseX + "," + mouseY + ")", 60, 20);
+    ctx.fillText("(" + mouseX + "," + mouseY + ")", 60, 635);
+    */
 
     // render square    
     //context.fillStyle = color;
