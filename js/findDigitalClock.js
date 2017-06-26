@@ -82,7 +82,8 @@ function drawClockText(digitalClockObj) {
     ctx.fillStyle = "#FF8C00"; //Orange
     ctx.font = "40px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(digitalClockObj.hour + ":" + digitalClockObj.minute, xCentre, yCentre);
+    //ctx.fillText(digitalClockObj.hour + ":" + digitalClockObj.minute, xCentre, yCentre);
+    ctx.fillText(digitalClockObj.timeString(), xCentre, yCentre);
 }
 
 function fourColumnCanvas() {
@@ -245,6 +246,8 @@ function submitAnswer(clickedClock){
     }
     answerSubmitted = true;
     drawResetButton();
+
+    console.log("Clicked: " + clickedClock.timeString());
 
     if (clickedClock == answerClock) {
         answerMsg = correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)]; 
