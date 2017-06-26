@@ -1,4 +1,8 @@
-﻿var clocks = [];
+﻿/* Simple game to display an analogue clock and a digital clock and read the time out loud
+Uses AJAX for updating images
+*/
+
+var clocks = [];
 var clocksToDisplay = [];
 var questions = ["O'clock", "Quarter past", "Half past", "Quarter to"]
 var currentQuestion = ""
@@ -17,6 +21,13 @@ function createClockCollection() {
         var s = "clock" + hr + min;
         var tmpClock = new Clock(s, hr, min, "../_img/" + s + ".png");
         clocks[i] = tmpClock;
+/*      //Moved assign images to clock to display so only creates images needed for display
+        var newImg = document.createElement("img");
+        newImg.setAttribute("id", clocks[i].clockId);
+        newImg.setAttribute("src", clocks[i].imgPath);
+        newImg.setAttribute("class", "clockImage");
+        clocks[i].srcImgElement = newImg;
+*/
     }
 }
 
@@ -48,6 +59,10 @@ request.onreadystatechange = function () {
 // open and send it
 request.open('GET', 'data.txt', true);
 request.send();
+
+
+
+
 
 
 
@@ -104,15 +119,19 @@ function displayClocks() {
         clocksToDisplay[i].srcImgElement.addEventListener("mouseout", function () { mouseOut(this) });
 
         document.getElementById("clockImages").appendChild(clocksToDisplay[i].srcImgElement);
-
+        if (clocksToDisplay[i].minute == timeAsNumber(currentQuestion)) {
+            answerClock = clocksToDisplay[i];
+            //console.log("Answer clock set: " + answerClock.minute)
+        }
     }
 }
 
-function setDigitalClockQuestion() {
-
-    var i = getRandomIntInclusive(0, clocksToDisplay.length - 1)
-    answerClock = clocksToDisplay[i];
-    document.getElementById("questionSection").innerHTML = answerClock.hour + ":" + answerClock.minute;
+function setQuestion () {
+    var i = getRandomIntInclusive(0, 3)
+    currentQuestion = questions[i];
+    //document.getElementById("questionSection").innerHTML = currentQuestion;
+    var t = document.createTextNode(currentQuestion);
+    document.getElementById("questionSection").appendChild(t)
 }
 
 function getClockByID(cId) {
@@ -140,12 +159,16 @@ function submitAnswer(s) {
 
     if (document.getElementById("resetBtn") == null) {
         displayReset();
-    }
+    } 
 
     if (clickedClock == answerClock) {
-        ans.innerHTML = correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)];
+        var t = document.createTextNode(correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)]);
+        ans.appendChild(t);
+        //ans.innerHTML = correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)];
     } else {
-        ans.innerHTML = incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)];
+        var t = document.createTextNode(incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)]);
+        ans.appendChild(t);
+        //ans.innerHTML = incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)];
     }
 
 }
@@ -167,9 +190,16 @@ function displayReset() {
 function resetGame() {
     console.log("reset clicked");
     resetBtn.parentNode.removeChild(resetBtn);
+    console.log(document.getElementById("ansID"));
     document.getElementById("ansID").parentNode.removeChild(document.getElementById("ansID"));
+    //ans.parentNode.removeChild(document.getElementById("ansID"));
     filterClockImages("none");
-    location.reload();
+    //location.reload();
+
+    resetQuestion
+
+
+
 }
 
 function filterClockImages(s) {
@@ -183,7 +213,8 @@ function filterClockImages(s) {
 
 
 //TODO: Convert to initialise, check for null, delete and create
+setQuestion();
 createClockCollection();
+//printClockCollection();
 displayClocks();
-setDigitalClockQuestion();
 
