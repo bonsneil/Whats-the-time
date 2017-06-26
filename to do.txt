@@ -1,19 +1,14 @@
-//Dictionary for answers
-//Random winning text
-//home page size set
 add display time function to clock object
 Floating / animated notification / hover?
 Icons on home page
 Scores
 High scores - persistent
-//home page
-convert to canvas tag: isolate game code - standalone in set container
-https://www.tutorialspoint.com/html5/html5_canvas.htm
-
 Contact form
-//Mouseover icon/effect
+Mouseover icon/effect in canvas
+
 Rewards
 
+easter egg player behind screen
 
 960 x 640
 
