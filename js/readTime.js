@@ -17,7 +17,6 @@ function createClockCollection() {
         var s = "clock" + hr + min;
         var tmpClock = new Clock(s, hr, min, "../_img/" + s + ".png");
         clocks[i] = tmpClock;
-        //console.log(clocks[i].timeString());
     }
 }
 
@@ -86,10 +85,11 @@ function displayClocks() {
     var numberClocksToDisplay = 4;
     for (var i = 0; i < numberClocksToDisplay; i++) {
         clocksToDisplay[i] = getClock((i * 15) % 60, getRandomIntInclusive(1, 12));
+        console.log(clocksToDisplay[i]);
         //Attach Images To Clock
         var newImg = document.createElement("img");
         newImg.setAttribute("id", clocksToDisplay[i].clockId);
-        console.log("Path: " + clocksToDisplay[i].imgPath)
+        console.log("Path: " + clocksToDisplay[i].imgPath);
         newImg.setAttribute("src", clocksToDisplay[i].imgPath);
         newImg.setAttribute("class", "clockImage");
         clocksToDisplay[i].srcImgElement = newImg;
@@ -112,8 +112,7 @@ function displayClocks() {
 function setDigitalClockQuestion() {
     var i = getRandomIntInclusive(0, clocksToDisplay.length - 1)
     answerClock = clocksToDisplay[i];
-//    console.log(answerClock.timeString());
-    var t = document.createTextNode(answerClock.hour + ":" + answerClock.minute);
+    var t = document.createTextNode(answerClock.timeString());
     document.getElementById("questionSection").appendChild(t);
 }
 
