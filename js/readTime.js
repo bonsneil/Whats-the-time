@@ -17,6 +17,7 @@ function createClockCollection() {
         var s = "clock" + hr + min;
         var tmpClock = new Clock(s, hr, min, "../_img/" + s + ".png");
         clocks[i] = tmpClock;
+        //console.log(clocks[i].timeString());
     }
 }
 
@@ -109,10 +110,11 @@ function displayClocks() {
 }
 
 function setDigitalClockQuestion() {
-
     var i = getRandomIntInclusive(0, clocksToDisplay.length - 1)
     answerClock = clocksToDisplay[i];
-    document.getElementById("questionSection").innerHTML = answerClock.hour + ":" + answerClock.minute;
+//    console.log(answerClock.timeString());
+    var t = document.createTextNode(answerClock.hour + ":" + answerClock.minute);
+    document.getElementById("questionSection").appendChild(t);
 }
 
 function getClockByID(cId) {
@@ -143,9 +145,11 @@ function submitAnswer(s) {
     }
 
     if (clickedClock == answerClock) {
-        ans.innerHTML = correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)];
+        var t = document.createTextNode(correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)]);
+        ans.appendChild(t);
     } else {
-        ans.innerHTML = incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)];
+        var t = document.createTextNode(incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)]);
+        ans.appendChild(t);
     }
 
 }
@@ -170,6 +174,12 @@ function resetGame() {
     document.getElementById("ansID").parentNode.removeChild(document.getElementById("ansID"));
     filterClockImages("none");
     location.reload();
+
+    //TODO: displayclocks as AJAX
+    //clear display clocks array, clear display of displayClocks
+    //displayCLocks();
+    //clear question text
+    //setDigitalClockQuestion();
 }
 
 function filterClockImages(s) {
