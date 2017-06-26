@@ -1,10 +1,12 @@
-add display time function to clock object
-Floating / animated notification / hover?
-Icons on home page
+messages using AJAX
+
+Icons on home page using jquery
 Scores
 High scores - persistent
 Contact form
-Mouseover icon/effect in canvas
+//Mouseover icon/effect in canvas
+Floating / animated notification / hover?
+
 
 Rewards
 
