@@ -1,9 +1,11 @@
-messages using AJAX
+messages using AJAX and JSON
+update clocks using ajax
 
 Icons on home page using jquery
 Scores
 High scores - persistent
-Contact form
+Contact form as php
+Contact for as AJAX/javascript
 //Mouseover icon/effect in canvas
 Floating / animated notification / hover?
 

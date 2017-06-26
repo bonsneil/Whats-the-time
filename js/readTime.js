@@ -35,7 +35,9 @@ if (window.XMLHttpRequest) {  // does it exist? we're in Firefox, Safari etc.
 request.onreadystatechange = function () {
     console.log("We were called!");
     console.log(request.readyState);
-    if (request.readyState === 4) {
+    //XMLHttpRequest.DONE === 4 [full server response was received and it's OK to continue processing it]
+    //200 [successful AJAX call]
+    if ((request.readyState === 4) && (request.status===200)) {
         console.log(request);
         var p = document.createElement("p");
         var t = document.createTextNode(request.responseText);
@@ -53,12 +55,17 @@ request.send();
 
 
 function printClockCollection() {
-    for (var i = 0; i < clocks.length; i++) {
+    for (var i in clocks) {
+        for (var p in clocks[i]) {
+            console.log(p + " is " + clocks[i][p])
+        }
+    }
+    /*for (var i = 0; i < clocks.length; i++) {
         console.log(clocks[i].clockId);
         console.log(clocks[i].hour);
         console.log(clocks[i].minute);
         console.log(clocks[i].imgPath);
-    }
+    }*/
 }
 
 function getClock(searchMinute, searchHour) {
@@ -193,6 +200,7 @@ function filterClockImages(s) {
 
 //TODO: Convert to initialise, check for null, delete and create
 createClockCollection();
+//printClockCollection();
 displayClocks();
 setDigitalClockQuestion();
 
