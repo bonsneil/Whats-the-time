@@ -3,6 +3,8 @@ var clocksToDisplay = [];
 var questions = ["O'clock", "Quarter past", "Half past", "Quarter to"]
 var currentQuestion = ""
 var answerClock = new Clock();
+var correctMsgJSON;
+var incorrectMsgJSON;
 
 function createClockCollection() {
     var j = 0;
@@ -39,16 +41,30 @@ request.onreadystatechange = function () {
     //200 [successful AJAX call]
     if ((request.readyState === 4) && (request.status===200)) {
         console.log(request);
+
+
+        console.log(request.responseText);
+        msgJSON = JSON.parse(request.responseText);
+        console.log(msgJSON);
+        correctMsgJSON = msgJSON.correctMsg;
+        console.log(correctMsgJSON);
+        incorrectMsgJSON = msgJSON.incorrectMsg;
+        console.log(incorrectMsgJSON);
+        /*for (key in correctMsgJSON) {
+            console.log(key)
+            console.log(correctMsgJSON[key])
+        }
+
         var p = document.createElement("p");
         var t = document.createTextNode(request.responseText);
         p.appendChild(t);
         document.body.appendChild(p);
-        console.log(request.responseText);
+        */
     }
 };
 
 // open and send it
-request.open('GET', 'data.txt', true);
+request.open('GET', 'messages.json', true);
 request.send();
 
 
@@ -151,10 +167,20 @@ function submitAnswer(s) {
     }
 
     if (clickedClock == answerClock) {
-        var t = document.createTextNode(correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)]);
+
+        var keys = Object.keys(correctMsgJSON)
+        var key = keys[getRandomIntInclusive(0, keys.length - 1)]
+        //console.log("key: " + key)
+        //console.log("correctMsgJSON: " + correctMsgJSON[key])
+
+        var t = document.createTextNode(correctMsgJSON[key]);
         ans.appendChild(t);
     } else {
-        var t = document.createTextNode(incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)]);
+
+        var keys = Object.keys(incorrectMsgJSON)
+        var key = keys[getRandomIntInclusive(0, keys.length - 1)]
+        var t = document.createTextNode(incorrectMsgJSON[key]);
+        //var t = document.createTextNode(incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)]);
         ans.appendChild(t);
     }
 
@@ -203,4 +229,5 @@ createClockCollection();
 //printClockCollection();
 displayClocks();
 setDigitalClockQuestion();
+
 

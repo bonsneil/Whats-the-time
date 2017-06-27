@@ -1,0 +1,17 @@
+{
+	"correctMsg":{
+		"msg00": "You must be a Time Lord!!",
+		"msg01": "Congratulations!",
+		"msg02": "Woo-hoo!",
+		"msg03": "You win!",
+		"msg04": "Cowabunga!!",
+		"msg05": "Great job!"
+		},
+	"incorrectMsg":
+		{
+		"msg00": "Try again",
+		"msg01": "So close, keep going",
+		"msg02": "Almost got it"
+		}
+
+}
