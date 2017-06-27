@@ -22,29 +22,11 @@ function createClockCollection() {
     }
 }
 
-
-// 1: Create the request and check compatibility
-//var request = new XMLHttpRequest();
-var request;
-
-if (window.XMLHttpRequest) {  // does it exist? we're in Firefox, Safari etc.
-    request = new XMLHttpRequest();
-} else if (window.ActiveXObject) { // if not, we're in IE
-    request = new ActiveXObject("Microsoft.XMLHTTP");
-}
-
-// 2: create an event handler for our request to call back
-request.onreadystatechange = function () {
-    console.log("We were called!");
-    console.log(request.readyState);
-    //XMLHttpRequest.DONE === 4 [full server response was received and it's OK to continue processing it]
-    //200 [successful AJAX call]
-    if ((request.readyState === 4) && (request.status===200)) {
-        console.log(request);
+$(document).ready(function () {
+// when the document is ready go and get the messages
+    $.getJSON('messages.json', function (msgJSON) {
 
 
-        console.log(request.responseText);
-        msgJSON = JSON.parse(request.responseText);
         console.log(msgJSON);
         correctMsgJSON = msgJSON.correctMsg;
         console.log(correctMsgJSON);
@@ -60,14 +42,10 @@ request.onreadystatechange = function () {
         p.appendChild(t);
         document.body.appendChild(p);
         */
-    }
-};
 
-// open and send it
-request.open('GET', 'messages.json', true);
-request.send();
+    });
 
-
+});
 
 
 function printClockCollection() {
