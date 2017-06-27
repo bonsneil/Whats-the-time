@@ -3,6 +3,8 @@ var clocksToDisplay = [];
 var questions = ["O'clock", "Quarter past", "Half past", "Quarter to"]
 var currentQuestion = ""
 var answerClock = new Clock();
+var correctMsgJSON;
+var incorrectMsgJSON;
 
 function createClockCollection() {
     var j = 0;
@@ -35,30 +37,51 @@ if (window.XMLHttpRequest) {  // does it exist? we're in Firefox, Safari etc.
 request.onreadystatechange = function () {
     console.log("We were called!");
     console.log(request.readyState);
-    if (request.readyState === 4) {
+    //XMLHttpRequest.DONE === 4 [full server response was received and it's OK to continue processing it]
+    //200 [successful AJAX call]
+    if ((request.readyState === 4) && (request.status===200)) {
         console.log(request);
+
+
+        console.log(request.responseText);
+        msgJSON = JSON.parse(request.responseText);
+        console.log(msgJSON);
+        correctMsgJSON = msgJSON.correctMsg;
+        console.log(correctMsgJSON);
+        incorrectMsgJSON = msgJSON.incorrectMsg;
+        console.log(incorrectMsgJSON);
+        /*for (key in correctMsgJSON) {
+            console.log(key)
+            console.log(correctMsgJSON[key])
+        }
+
         var p = document.createElement("p");
         var t = document.createTextNode(request.responseText);
         p.appendChild(t);
         document.body.appendChild(p);
-        console.log(request.responseText);
+        */
     }
 };
 
 // open and send it
-request.open('GET', 'data.txt', true);
+request.open('GET', 'messages.json', true);
 request.send();
 
 
 
 
 function printClockCollection() {
-    for (var i = 0; i < clocks.length; i++) {
+    for (var i in clocks) {
+        for (var p in clocks[i]) {
+            console.log(p + " is " + clocks[i][p])
+        }
+    }
+    /*for (var i = 0; i < clocks.length; i++) {
         console.log(clocks[i].clockId);
         console.log(clocks[i].hour);
         console.log(clocks[i].minute);
         console.log(clocks[i].imgPath);
-    }
+    }*/
 }
 
 function getClock(searchMinute, searchHour) {
@@ -85,10 +108,11 @@ function displayClocks() {
     var numberClocksToDisplay = 4;
     for (var i = 0; i < numberClocksToDisplay; i++) {
         clocksToDisplay[i] = getClock((i * 15) % 60, getRandomIntInclusive(1, 12));
+        console.log(clocksToDisplay[i]);
         //Attach Images To Clock
         var newImg = document.createElement("img");
         newImg.setAttribute("id", clocksToDisplay[i].clockId);
-        console.log("Path: " + clocksToDisplay[i].imgPath)
+        console.log("Path: " + clocksToDisplay[i].imgPath);
         newImg.setAttribute("src", clocksToDisplay[i].imgPath);
         newImg.setAttribute("class", "clockImage");
         clocksToDisplay[i].srcImgElement = newImg;
@@ -109,10 +133,10 @@ function displayClocks() {
 }
 
 function setDigitalClockQuestion() {
-
     var i = getRandomIntInclusive(0, clocksToDisplay.length - 1)
     answerClock = clocksToDisplay[i];
-    document.getElementById("questionSection").innerHTML = answerClock.hour + ":" + answerClock.minute;
+    var t = document.createTextNode(answerClock.timeString());
+    document.getElementById("questionSection").appendChild(t);
 }
 
 function getClockByID(cId) {
@@ -143,9 +167,21 @@ function submitAnswer(s) {
     }
 
     if (clickedClock == answerClock) {
-        ans.innerHTML = correctMsg[getRandomIntInclusive(0, correctMsg.length - 1)];
+
+        var keys = Object.keys(correctMsgJSON)
+        var key = keys[getRandomIntInclusive(0, keys.length - 1)]
+        //console.log("key: " + key)
+        //console.log("correctMsgJSON: " + correctMsgJSON[key])
+
+        var t = document.createTextNode(correctMsgJSON[key]);
+        ans.appendChild(t);
     } else {
-        ans.innerHTML = incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)];
+
+        var keys = Object.keys(incorrectMsgJSON)
+        var key = keys[getRandomIntInclusive(0, keys.length - 1)]
+        var t = document.createTextNode(incorrectMsgJSON[key]);
+        //var t = document.createTextNode(incorrectMsg[getRandomIntInclusive(0, incorrectMsg.length - 1)]);
+        ans.appendChild(t);
     }
 
 }
@@ -170,6 +206,12 @@ function resetGame() {
     document.getElementById("ansID").parentNode.removeChild(document.getElementById("ansID"));
     filterClockImages("none");
     location.reload();
+
+    //TODO: displayclocks as AJAX
+    //clear display clocks array, clear display of displayClocks
+    //displayCLocks();
+    //clear question text
+    //setDigitalClockQuestion();
 }
 
 function filterClockImages(s) {
@@ -184,6 +226,8 @@ function filterClockImages(s) {
 
 //TODO: Convert to initialise, check for null, delete and create
 createClockCollection();
+//printClockCollection();
 displayClocks();
 setDigitalClockQuestion();
+
 
