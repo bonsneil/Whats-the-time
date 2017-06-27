@@ -76,7 +76,6 @@ function displayClocks() {
         $("#clockImages").append(clocksToDisplay[i].srcImgElement);
         if (clocksToDisplay[i].minute == timeAsNumber(currentQuestion)) {
             answerClock = clocksToDisplay[i];
-            //console.log("Answer clock set: " + answerClock.minute)
         }
     }
 }
@@ -134,8 +133,6 @@ function resetGame() {
     console.log("reset clicked");
     //remove reset button and answer text
     $("#answerSection").empty();
-    //resetBtn.parentNode.removeChild(resetBtn);
-    //$("#ansID").remove();
 
     //remove clock images
     filterClockImages("none");
@@ -158,14 +155,8 @@ function resetGame() {
 }
 
 function filterClockImages(s) {
-    //var elements = document.getElementsByTagName("img");
-    var elements = document.getElementsByClassName("clockImage")
-    for (var i = 0; i < elements.length; i++) {
-        $(elements[i]).attr("style", "filter: " + s);
-        $(elements[i]).attr("style", "-webkit-filter: " + s); /* Safari 6.0 - 9.0 */
-        //elements[i].setAttribute("style", "filter: " + s);
-        //elements[i].setAttribute("style", "-webkit-filter: " + s); /* Safari 6.0 - 9.0 */
-    }
+    $(".clockImage").attr("style", "filter: " + s);
+    $(".clockImage").attr("style", "-webkit-filter: " + s); /* Safari 6.0 - 9.0 */
 }
 
 
@@ -184,5 +175,4 @@ function setupGame() {
 }
 
 createClockCollection();
-//printClockCollection();
 setupGame();
