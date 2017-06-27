@@ -23,7 +23,7 @@ function createClockCollection() {
 }
 
 $(document).ready(function () {
-
+// when the document is ready go and get the messages
     $.getJSON('messages.json', function (msgJSON) {
 
 
@@ -46,8 +46,6 @@ $(document).ready(function () {
     });
 
 });
-
-
 
 
 function printClockCollection() {
