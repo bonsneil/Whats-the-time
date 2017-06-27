@@ -37,16 +37,19 @@ function getClock(searchMinute, searchHour) {
     }
 }
 
-function mouseOver(obj) {
-    //document.getElementById("demo").style.color = "red";
-    //alert("Over: " + obj.id)
-    //obj.height = obj.height * 1.5;
+
+function setQuestion() {
+    var i = getRandomIntInclusive(0, 3)
+    currentQuestion = questions[i];
+    $("#questionSection").append(currentQuestion);
 }
 
-function mouseOut(obj) {
-    //document.getElementById("demo").style.color = "black";
-    //alert("Out: " + obj.id)
-    //obj.height = obj.height / 1.5;
+function getClockByID(cId) {
+    for (var i = 0; i < clocks.length; i++) {
+        if (clocks[i].clockId == cId) {
+            return clocks[i];
+        }
+    }
 }
 
 function displayClocks() {
@@ -65,36 +68,36 @@ function displayClocks() {
     clocksToDisplay = shuffle(clocksToDisplay);
 
     for (var i = 0; i < clocksToDisplay.length; i++) {
-
-        clocksToDisplay[i].srcImgElement.addEventListener("click", function () { submitAnswer(this.id) });
-
-      //  $(".clockImage").on("click", onMouseClick(this.id));
-
-        clocksToDisplay[i].srcImgElement.addEventListener("mouseover", function () { mouseOver(this) });
-        clocksToDisplay[i].srcImgElement.addEventListener("mouseout", function () { mouseOut(this) });
+        //moved to outside of loop and applied to class via jQuery
+        //clocksToDisplay[i].srcImgElement.addEventListener("click", function () { submitAnswer(this.id) });
+        //clocksToDisplay[i].srcImgElement.addEventListener("mouseover", function () { mouseOver(this) });
+        //clocksToDisplay[i].srcImgElement.addEventListener("mouseout", function () { mouseOut(this) });
 
         $("#clockImages").append(clocksToDisplay[i].srcImgElement);
         if (clocksToDisplay[i].minute == timeAsNumber(currentQuestion)) {
             answerClock = clocksToDisplay[i];
         }
     }
+    $(".clockImage").on("click", function () { submitAnswer(this.id) });
 }
 
-function setQuestion () {
-    var i = getRandomIntInclusive(0, 3)
-    currentQuestion = questions[i];
-    $("#questionSection").append(currentQuestion);
+function onMouseClick(s) {
+    console.log("mouse clicked: " + s);
 }
 
-function getClockByID(cId) {
-    for (var i = 0; i < clocks.length; i++) {
-        if (clocks[i].clockId == cId) {
-            return clocks[i];
-        }
-    }
+function mouseOver(obj) {
+    //console.log("Over: " + obj.id)
+    //obj.height = obj.height * 1.5;
 }
+
+function mouseOut(obj) {
+    //console.log("Out: " + obj.id)
+    //obj.height = obj.height / 1.5;
+}
+
 
 function submitAnswer(s) {
+    console.log("mouse clicked: " + s);
     if (document.getElementById("ansID") == null) {
         var ans = document.createElement("p");
         $(ans).attr("id", "ansID");
@@ -160,19 +163,16 @@ function filterClockImages(s) {
 }
 
 
-$(document).ready(function () {
-    //Add event handlers
-});
-
-function onMouseClick(evt) {
-    alert("clicked");
-}
-
 function setupGame() {
     console.log("Starting new game");
     setQuestion();
     displayClocks();
 }
+
+
+$(document).ready(function () {
+    //Add event handlers
+});
 
 createClockCollection();
 setupGame();
