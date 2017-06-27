@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>First jQuery-Enabled Page</title>
+    <link rel="stylesheet" href="../style.css" />
+
+    <!-- insert the script to reference jQuery here -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>	
+
+    <!-- insert the script to display the Hello World message here -->
+	<script>
+	$("document").ready(function() {
+		$("#content").append("<p>Page loaded</p>");
+		})
+	</script>
+</head>
+
+<body>
+    <h1>First jQuery Page</h1>
+    <div id="content">
+        <!-- we start with an empty document -->
+    </div>
+</body>
+
+</html>
