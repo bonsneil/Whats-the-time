@@ -58,9 +58,6 @@ function displayClocks() {
         $(newImg).attr("id", clocksToDisplay[i].clockId);
         $(newImg).attr("src", clocksToDisplay[i].imgPath);
         $(newImg).attr("class", "clockImage");
-        //newImg.setAttribute("id", clocksToDisplay[i].clockId);
-        //newImg.setAttribute("src", clocksToDisplay[i].imgPath);
-        //newImg.setAttribute("class", "clockImage");
         clocksToDisplay[i].srcImgElement = newImg;
     }
 
@@ -76,7 +73,6 @@ function displayClocks() {
         clocksToDisplay[i].srcImgElement.addEventListener("mouseover", function () { mouseOver(this) });
         clocksToDisplay[i].srcImgElement.addEventListener("mouseout", function () { mouseOut(this) });
 
-        //document.getElementById("clockImages").appendChild(clocksToDisplay[i].srcImgElement);
         $("#clockImages").append(clocksToDisplay[i].srcImgElement);
         if (clocksToDisplay[i].minute == timeAsNumber(currentQuestion)) {
             answerClock = clocksToDisplay[i];
@@ -88,7 +84,6 @@ function displayClocks() {
 function setQuestion () {
     var i = getRandomIntInclusive(0, 3)
     currentQuestion = questions[i];
-   // document.getElementById("questionSection").innerHTML = currentQuestion;
     $("#questionSection").append(currentQuestion);
 }
 
@@ -103,8 +98,6 @@ function getClockByID(cId) {
 function submitAnswer(s) {
     if (document.getElementById("ansID") == null) {
         var ans = document.createElement("p");
-        //ans.setAttribute("id", "ansID");
-        //document.getElementById("answerSection").appendChild(ans);
         $(ans).attr("id", "ansID");
         $("#answerSection").append(ans);
     } else {
@@ -114,7 +107,6 @@ function submitAnswer(s) {
     var clickedClock = getClockByID(s);
 
     filterClockImages("grayscale(100%)");
-    //document.getElementById(answerClock.clockId).setAttribute("style", "filter: none");
     $("#" + answerClock.clockId).attr("style", "filter: none");
 
     if (document.getElementById("resetBtn") == null) {
@@ -134,21 +126,35 @@ function displayReset() {
     $(resetBtn).attr("id", "resetBtn");
     $(resetBtn).attr("src", "../images/playAgain.png");
     $(resetBtn).attr("class", "resetImage");
-    //resetBtn.setAttribute("id", "resetBtn");
-    //resetBtn.setAttribute("src", "../images/playAgain.png");
-    //resetBtn.setAttribute("class", "resetImage");
     resetBtn.addEventListener("click", function () { resetGame() });
-    //document.getElementById("answerSection").appendChild(resetBtn);
     $("#answerSection").append(resetBtn);
 }
 
 function resetGame() {
     console.log("reset clicked");
-    resetBtn.parentNode.removeChild(resetBtn);
-    //document.getElementById("ansID").parentNode.removeChild(document.getElementById("ansID"));
-    $("#ansID").remove();
+    //remove reset button and answer text
+    $("#answerSection").empty();
+    //resetBtn.parentNode.removeChild(resetBtn);
+    //$("#ansID").remove();
+
+    //remove clock images
     filterClockImages("none");
-    location.reload();
+    $("#clockImages").empty();
+
+    //remove question
+    $("#questionSection").empty();
+
+    //clear question
+    currentQuestion = "";
+
+    //clear answer
+    answerClock = {};
+
+    //clear display clocks
+    clocksToDisplay.length = 0;
+
+    //Start new game
+    setupGame();
 }
 
 function filterClockImages(s) {
@@ -163,8 +169,6 @@ function filterClockImages(s) {
 }
 
 
-
-
 $(document).ready(function () {
     //Add event handlers
 });
@@ -173,10 +177,12 @@ function onMouseClick(evt) {
     alert("clicked");
 }
 
+function setupGame() {
+    console.log("Starting new game");
+    setQuestion();
+    displayClocks();
+}
 
-//TODO: Convert to initialise, check for null, delete and create
-setQuestion();
 createClockCollection();
-printClockCollection();
-displayClocks();
-
+//printClockCollection();
+setupGame();
