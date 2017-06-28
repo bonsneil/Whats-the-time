@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     console.log("Ready")
 
-    $.getJSON('contactMsgDatabase.json', function (contactMsgJSON) {
+    $.getJSON('contactDatabase.json', function (contactMsgJSON) {
 
         console.log("contacted for file")
         console.log(contactMsgJSON);
@@ -11,24 +11,24 @@ $(document).ready(function () {
     });
 
     
-        // when the document is ready go and get the messages
-        $.getJSON('messages.json', function (msgJSON) {
+    // when the document is ready go and get the messages
+    $.getJSON('messages.json', function (msgJSON) {
 
 
-            console.log(msgJSON);
+        console.log(msgJSON);
         
-            /*for (key in correctMsgJSON) {
-                console.log(key)
-                console.log(correctMsgJSON[key])
-            }
+        /*for (key in correctMsgJSON) {
+            console.log(key)
+            console.log(correctMsgJSON[key])
+        }
     
-            var p = document.createElement("p");
-            var t = document.createTextNode(request.responseText);
-            p.appendChild(t);
-            document.body.appendChild(p);
-            */
+        var p = document.createElement("p");
+        var t = document.createTextNode(request.responseText);
+        p.appendChild(t);
+        document.body.appendChild(p);
+        */
 
-        });
+    });
 
     
 
