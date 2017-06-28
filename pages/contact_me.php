@@ -1,6 +1,8 @@
 <?php
 if($_POST)
 {
+	$file = "contactDatabase.json";
+	
     //check if its an ajax request, exit if not
     if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {       
         $output = json_encode(array( //create JSON data
@@ -28,13 +30,23 @@ if($_POST)
         $output = json_encode(array('type'=>'error', 'text' => 'Too short message! Please enter something.'));
         die($output);
     }
-    
+	
+    $jsonObj  =json_decode(file_get_contents($file), true);
+	//file_put_contents("console.txt", $jsonObj)
+	
 	//Create a JSON object from the contact form and append to database file
+	//Create JSON object
 	$contactMessage->userName = $user_name;
 	$contactMessage->userEmail = $user_email;
 	$contactMessage->userMessage = $message;
 	$contactMessageJSON = json_encode($contactMessage);
-	file_put_contents("contactDatabase.txt", $contactMessageJSON.PHP_EOL, FILE_APPEND);
+	
+	//Convert JSON object to array so it can be added to existing objects
+	$contactMessageArray = json_decode($contactMessageJSON,true);
+	$jsonObj["messages"][]  = $contactMessageArray;
+
+	file_put_contents($file, json_encode($jsonObj));	
+	//file_put_contents($file, $contactMessageJSON.PHP_EOL, FILE_APPEND);
 		
 	//Return confirmation message
 	$output = json_encode(array('type'=>'message', 'text' => 'Hi '.$user_name .', Thank you for your message!'));
