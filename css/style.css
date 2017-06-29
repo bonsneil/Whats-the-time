@@ -595,3 +595,12 @@ ul#nav li a:hover {
     border-width: 1px;
     border-color: red;
 }
+
+
+
+.accordionItem { font-size: 100%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
+.accordionItem h2 { margin: 0; font-size: 1.1em; padding: 0.4em; color: #28F; background-color: #053E83; border-bottom: 1px solid #66d; text-shadow: none;}
+.accordionItem h2:hover { cursor: pointer; }
+.accordionItem div { margin: 0; padding: 1em 0.4em; background-color: #eef; border-bottom: 1px solid #66d; }
+.accordionItem.hide h2 { color: #000; background-color: #88f; }
+.accordionItem.hide div { display: none; }
