@@ -20,11 +20,14 @@ $(document).ready(function () {
 
         if (proceed) //everything looks good! proceed...
         {
+
+            var d = new Date();
             //get input field values data to be sent to server
             post_data = {
                 'user_name': $('input[name=userName]').val(),
                 'user_email': $('input[name=userEmail]').val(),
                 'msg': $('textarea[name=userMessage]').val()
+                'date_sent': d.getTime();
             };
 
             //Ajax post data to server

@@ -1,11 +1,15 @@
-messages using AJAX and JSON
+//messages using AJAX and JSON
+
+convert table to bootstrp
+
+
 update clocks using ajax
 
 Icons on home page using jquery
 Scores
 High scores - persistent
-Contact form as php
-Contact for as AJAX/javascript
+//Contact form as php
+//Contact for as AJAX/javascript
 //Mouseover icon/effect in canvas
 Floating / animated notification / hover?
 
