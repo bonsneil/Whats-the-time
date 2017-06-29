@@ -1,5 +1,7 @@
 $(document).ready(function () {
     $("#submit_btn").click(function () {
+    $.ajaxSetup({ cache: false });
+	
         console.log("Clicked");
         var proceed = true;
         //simple validation at client's end
@@ -26,8 +28,8 @@ $(document).ready(function () {
             post_data = {
                 'user_name': $('input[name=userName]').val(),
                 'user_email': $('input[name=userEmail]').val(),
-                'msg': $('textarea[name=userMessage]').val()
-                'date_sent': d.getTime();
+                'msg': $('textarea[name=userMessage]').val(),
+                'date_sent': d.getTime()
             };
 
             //Ajax post data to server

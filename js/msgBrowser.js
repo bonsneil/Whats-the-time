@@ -1,5 +1,7 @@
 ﻿var msgArray;
 var dataLoaded = false;
+var accordionItems = new Array();
+	
 
 var formDisplayButton = $("<input>", { class: "formDisplay", id: "formDisplayBtn", type: "submit", name: "formDisplayBtn", value: "formDisplay" })
 $("#contact_body").prepend(formDisplayButton);
@@ -8,6 +10,10 @@ $("#formDisplayBtn").on("click", function () { switchViewToForm() });
 var tableDisplayButton = $("<input>", { class: "formDisplay", id: "tableDisplayBtn", type: "submit", name: "tableDisplayBtn", value: "tableDisplay" })
 $("#contact_body").prepend(tableDisplayButton);
 $("#tableDisplayBtn").on("click", function () { switchViewToTable() });
+
+var accordionDisplayButton = $("<input>", { class: "formDisplay", id: "accordionDisplayBtn", type: "submit", name: "accordionDisplayBtn", value: "accordionDisplay" })
+$("#contact_body").prepend(accordionDisplayButton);
+$("#accordionDisplayBtn").on("click", function () { switchViewToAccordion() });
 
 
 function switchViewToForm() {
@@ -19,6 +25,14 @@ function switchViewToTable() {
     $("#messageDisplayArea").empty();
     displayTable();
 }
+
+function switchViewToAccordion() {
+	console.log("Accordion");
+    $("#messageDisplayArea").empty();
+    displayAccordion();
+}
+
+
 
 $(document).ready(function () {
     //Disable caching so always gets latest json
@@ -207,7 +221,70 @@ function displayTable() {
     });
 }
 
-function displayAccordian() {
+
+
+// Behaviour of accordions
+function toggleItem() {
+  var itemClass = this.parentNode.className;
+
+  // Hide all items
+  for ( var i = 0; i < accordionItems.length; i++ ) {
+	accordionItems[i].className = 'accordionItem hide';
+  }
+
+  // Show this item if it was previously hidden
+  if ( itemClass == 'accordionItem hide' ) {
+	this.parentNode.className = 'accordionItem';
+
+  }
+}
+
+function getFirstChildWithTagName( element, tagName ) {
+  for ( var i = 0; i < element.childNodes.length; i++ ) {
+	if ( element.childNodes[i].nodeName == tagName ) return element.childNodes[i];
+  }
+}
+
+	
+	
+function displayAccordion() {
+
+
+    var accordionDisplayArea = $("<div>", { class: 'accordionAreaSettings', id: 'accordionDisplayArea' });
+    $("#messageDisplayArea").append(accordionDisplayArea);
+
+
+
+
+	$.each(msgArray, function (i, value) {
+        var d = new Date(parseInt(msgArray[i].userDate));
+		var accordionItem = $("<div>", { class: 'accordionItem'});
+		var accordionHeading = $("<h2>", { text: d.toDateString()  + "  " +  msgArray[i].userEmail});
+        var accordionContents = $("<div/>");
+		accordionContents.append($("<p>", { text: msgArray[i].userName }));
+		accordionContents.append($("<p>", { text: msgArray[i].userMessage }));
+		
+        accordionItem.append(accordionHeading);
+        accordionItem.append(accordionContents);
+		$("#accordionDisplayArea").append(accordionItem);
+    });
+
+	// Grab the accordion items from the page
+	var divs = document.getElementsByTagName( 'div' );
+	for ( var i = 0; i < divs.length; i++ ) {
+	if ( divs[i].className == 'accordionItem' ) accordionItems.push( divs[i] );
+	}
+
+	// Assign onclick events to the accordion item headings
+	for ( var i = 0; i < accordionItems.length; i++ ) {
+	var h2 = getFirstChildWithTagName( accordionItems[i], 'H2' );
+	h2.onclick = toggleItem;
+	}
+
+	// Hide all accordion item bodies except the first
+	for ( var i = 1; i < accordionItems.length; i++ ) {
+	accordionItems[i].className = 'accordionItem hide';
+	}
 
 }
 
