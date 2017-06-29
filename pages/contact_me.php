@@ -16,6 +16,7 @@ if($_POST)
     $user_name      = filter_var($_POST["user_name"], FILTER_SANITIZE_STRING);
     $user_email     = filter_var($_POST["user_email"], FILTER_SANITIZE_EMAIL);
     $message        = filter_var($_POST["msg"], FILTER_SANITIZE_STRING);
+    $date_sent        = filter_var($_POST["date_sent"], FILTER_SANITIZE_STRING);
     
     //additional php validation
     if(strlen($user_name)<4){ // If length is less than 4 it will output JSON error.
@@ -39,6 +40,7 @@ if($_POST)
 	$contactMessage->userName = $user_name;
 	$contactMessage->userEmail = $user_email;
 	$contactMessage->userMessage = $message;
+	$contactMessage->userDate = $date_sent;
 	$contactMessageJSON = json_encode($contactMessage);
 	
 	//Convert JSON object to array so it can be added to existing objects
